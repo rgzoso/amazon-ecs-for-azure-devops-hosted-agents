@@ -47,4 +47,7 @@ resource "aws_codebuild_project" "terraform_codebuild_project" {
     type      = var.build_project_source
     buildspec = var.build_spec
   }
+
+  lifecycle { ignore_changes = [project_visibility] }
+
 }

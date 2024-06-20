@@ -34,6 +34,13 @@ resource "aws_ecs_task_definition" "ecs_task_def" {
       containerPort = var.container_port
       hostPort      = var.container_host_port
     }]
+    healthCheck = {
+      retries = 3
+      command = [ "CMD-SHELL", "pgrep -u agent Agent.Listener || exit 1" ]
+      timeout: 10
+      interval: 60
+      startPeriod: 5
+    }
     logConfiguration = {
       logDriver = "awslogs"
       options = {

@@ -17,6 +17,8 @@ container_env_vars = [
   { name = "PORT", value = "80" },
   { name = "AZP_URL", value = "https://dev.azure.com/change-me/" },// Replace with your ADO Org URL
   { name = "AZP_POOL", value = "ecscluster" }, // Replace with your ADO Agent Pool name
+  #{ name = "SP_APP_ID", value = ""},  // Replace with your Service Principal Application ID
+  #{ name = "SP_APP_TENANT_ID", value = ""},   // Replace with your Tenant ID
 ]
 container_port      = 80
 container_host_port = 80
@@ -34,4 +36,4 @@ lambda_timeout     = "90"
 subnet_ids      = "subnet-change-me" // Replace with subnet-id from your account
 security_groups = "sg-change-me"     // Replace with security-group-id from your account
 
-ado_org = "change-me"  // Replace with your ADO Org ID
+ado_org = "change-me"  // Replace with your ADO Org Name

@@ -86,7 +86,7 @@ resource "aws_iam_policy" "codepipeline_policy" {
          "codecommit:ListBranches",
          "codecommit:UploadArchive"
       ],
-      "Resource": "arn:aws:codecommit:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:${var.source_repository_name}"
+      "Resource": "arn:${data.aws_partition.current.partition}:codecommit:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:${var.source_repository_name}"
     },
     {
       "Effect": "Allow",
@@ -95,7 +95,7 @@ resource "aws_iam_policy" "codepipeline_policy" {
         "codebuild:StartBuild",
         "codebuild:BatchGetProjects"
       ],
-      "Resource": "arn:aws:codebuild:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:project/${var.project_name}*"
+      "Resource": "arn:${data.aws_partition.current.partition}:codebuild:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:project/${var.project_name}*"
     },
     {
       "Effect": "Allow",
@@ -105,7 +105,7 @@ resource "aws_iam_policy" "codepipeline_policy" {
         "codebuild:UpdateReport",
         "codebuild:BatchPutTestCases"
       ],
-      "Resource": "arn:aws:codebuild:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:report-group/${var.project_name}*"
+      "Resource": "arn:${data.aws_partition.current.partition}:codebuild:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:report-group/${var.project_name}*"
     },
     {
       "Effect": "Allow",
@@ -119,7 +119,7 @@ resource "aws_iam_policy" "codepipeline_policy" {
         "ecr:PutImage",
         "ecr:UploadLayerPart"
       ],
-      "Resource": "arn:aws:ecr:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:repository/ado-ecs-ecr"
+      "Resource": "arn:${data.aws_partition.current.partition}:ecr:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:repository/ado-ecs-ecr"
     },
     {
       "Effect": "Allow",
@@ -167,7 +167,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
 
 resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
   role       = aws_iam_role.ecsTaskExecutionRole.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
+  policy_arn = "arn:${data.aws_partition.current.partition}:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
 }
 
 resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_assume_policy" {
@@ -191,7 +191,7 @@ resource "aws_iam_policy" "ecs_task_role_policy" {
         "logs:CreateLogStream",
         "logs:PutLogEvents"
       ],
-      "Resource": "arn:aws:iam:::role/${var.infrastructure_deployer_role_name}"
+      "Resource": "arn:${data.aws_partition.current.partition}:iam:::role/${var.infrastructure_deployer_role_name}"
     }
   ]
 }

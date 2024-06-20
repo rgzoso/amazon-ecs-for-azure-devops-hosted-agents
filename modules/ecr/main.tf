@@ -45,7 +45,7 @@ resource "aws_ecr_repository_policy" "terraform_ecr_repository_policy" {
         "Effect" : "Allow",
         "Principal" : {
           "AWS" : [
-            "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+            "arn:${data.aws_partition.current.partition}:iam::${data.aws_caller_identity.current.account_id}:root"
           ]
         },
         "Action" : [

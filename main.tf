@@ -254,7 +254,7 @@ module "ecs_ado_api" {
   api_path_part         = "create-task"
   api_stage_name        = "dev"
   api_stage_description = "ECS Ado API Deployment"
-  apigw_lambda_arn      = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${module.create_task_lambda.lambda_function_arn}/invocations"
+  apigw_lambda_arn      = "arn:${data.aws_partition.current.partition}:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${module.create_task_lambda.lambda_function_arn}/invocations"
   function_name         = module.create_task_lambda.lambda_function_name
   tags                  = local.resource_tags
 }

@@ -13,7 +13,22 @@ if [ -z "$AZP_TOKEN_FILE" ]; then
   fi
 
   AZP_TOKEN_FILE="/azp/.token"
+
+# Instead of storing the PAT in the AWS Secret, you can store the Service Principal Credential
+#  $SP_APP_ID Replace with your Service Principal Application ID in terraform.tfvars
+#  $SP_APP_TENANT_ID Replace with your Tenant ID 
+
+  if [ -z "$SP_APP_ID" ]; then
   echo -n $AZP_TOKEN > "$AZP_TOKEN_FILE"
+  else
+  # If using Service Principal, use the Secret to and Service Principal to request an Entra ID Token
+    curl -s -X POST -H 'Content-Type: application/x-www-form-urlencoded' \
+    "https://login.microsoftonline.com/$SP_APP_TENANT_ID/oauth2/v2.0/token" \
+    -d "client_id=$SP_APP_ID" \
+    -d 'grant_type=client_credentials' \
+    -d 'scope=https%3A%2F%2Fmanagement.core.windows.net%2F%2F.default' \
+    -d "client_secret=$AZP_TOKEN" | jq -r '.access_token' > "$AZP_TOKEN_FILE"
+  fi
 fi
 
 unset AZP_TOKEN
