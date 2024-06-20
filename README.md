@@ -28,6 +28,8 @@ When the Amazon ECS task container instance transitions to the `RUNNING` state, 
 
 The authentication procedure for enrolling the Amazon ECS container instance into the ADO agent pool is accomplished by using a personal access token (PAT). There is no need to configure AWS credentials because the access to AWS resources is handled via the Amazon ECS task and task execution [Identity and Access Management (IAM)](https://aws.amazon.com/iam) roles, thus eliminating the need to configure AWS credentials in ADO.
 
+Alternative Authentication in Azure DevOps includes usage of Entra ID Service Principal.  Using the Service Principal information, request Entra ID OAuth 2.0 Token which can then be used instead of the PAT.
+
 ### Prerequisites
 
 Here are the prerequisites to use this solution for your Azure Pipelines agents:
